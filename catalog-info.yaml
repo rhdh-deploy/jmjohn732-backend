@@ -1,0 +1,66 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: jmjohn732-poi-backend-app-dev
+  annotations:
+    argocd/app-name: jmjohn732-poi-backend-app-dev
+    backstage.io/kubernetes-id: jmjohn732-poi-backend-app
+    backstage.io/kubernetes-namespace: jmjohn732
+    backstage.io/techdocs-ref: dir:.
+    github.com/project-slug: rhdh-deploy/jmjohn732-backend
+    janus-idp.io/tekton-enabled: 'true'
+  tags:
+    - java
+    - quarkus
+    - maven
+    - workshop
+  links:
+    - url: https://console-openshift-console.apps.a1jxqhzp.eastus2.aroapp.io/dev-pipelines/ns/jmjohn732/
+      title: Pipelines
+      icon: web
+    - url: https://console-openshift-console.apps.a1jxqhzp.eastus2.aroapp.io/k8s/ns/jmjohn732/deployments/jmjohn732-poi-backend-app
+      title: Deployment
+      icon: web
+    - url: https://devspaces.apps.a1jxqhzp.eastus2.aroapp.io/#https://github.com/rhdh-deploy/jmjohn732-backend?che-editor=che-incubator/che-code/latest&devfilePath=.devfile-vscode.yaml
+      title: OpenShift Dev Spaces (VS Code)
+      icon: web
+spec:
+  type: service
+  lifecycle: production
+  owner: "user:default/jmjohn732"
+  system: workshop-system-jmjohn732
+  providesApis:
+    - backend-api-jmjohn732
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: workshop-system-jmjohn732
+  tags:
+    - backstage
+    - janus-idp
+    - openshift
+    - workshop
+    - rh-summit
+spec:
+  owner: "user:default/jmjohn732"
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: backend-api-jmjohn732
+  description: API surface used by workshop attendees to initialize and load parks data
+  links:
+    - url: http://jmjohn732-poi-backend-app-jmjohn732.apps.a1jxqhzp.eastus2.aroapp.io/q/swagger-ui
+      title: Swagger UI
+      icon: web
+    - url: https://github.com/rhdh-deploy/jmjohn732-backend/tree/main/src/main/resources/META-INF/openapi.yaml
+      title: API Spec
+      icon: code
+spec:
+  type: openapi
+  lifecycle: production
+  owner: "user:default/jmjohn732"
+  system: workshop-system-jmjohn732
+  definition:
+    $text: https://github.com/rhdh-deploy/jmjohn732-backend/tree/main/src/main/resources/META-INF/openapi.yaml
